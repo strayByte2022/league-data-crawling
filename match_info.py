@@ -32,8 +32,9 @@ for i in match_list:
     kills = match_info['info']['participants'][my_index]['kills']
     assists = match_info['info']['participants'][my_index]['assists']
     deaths = match_info['info']['participants'][my_index]['deaths']
-    kda = (kills+assists) / deaths
-    count += kda
+    if deaths != 0:
+        kda = (kills+assists) / deaths
+
     print('Kills: '+str(kills))
     print('Assists: '+str(assists))
     print('Deaths: '+str(deaths))
