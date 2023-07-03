@@ -1,5 +1,5 @@
 import requests
-
+import datetime
 global_id = ''
 
 def get_player_info(user_name, api_key):
@@ -37,11 +37,15 @@ def get_match_info_by_id(match_id,uuid,api_key):
     my_index = match_info['metadata']['participants'].index(uuid)
     # trivial info
     timeStamp1 = match_info['info']['gameCreation']
+    # FIXME: convert unix time into readable form
+    timeStamp1 = datetime.datetime.fromtimestamp(timeStamp1/1000)
+    timeStamp1 = timeStamp1.strftime('%Y-%m-%d %H:%M:%S')
     timeStamp2 = match_info['info']['gameDuration']
+    timeStamp2 = round(timeStamp2/60, 0)
     mode = match_info['info']['gameMode']
     version = match_info['info']['gameVersion']
-    print('Time: ' + str(timeStamp1))
-    print('Duration: ' + str(timeStamp2))
+    print('Time: ', timeStamp1)
+    print('Duration: ', timeStamp2,' mins')
     print('Game mode: ' + mode)
     print('Version: ' + version)
     # role
@@ -87,22 +91,22 @@ def get_match_info_by_id(match_id,uuid,api_key):
     # vision score
     visionScore = match_info['info']['participants'][my_index]['visionScore']
 
-    print('Vision score: ' + str(visionScore) + '\n')
+    print('Vision score: ' + str(visionScore))
 
     # wins
     wins = match_info['info']['participants'][my_index]['win']
 
     if wins:
-        print("Player won")
+        print("Player Won\n")
     else:
-        print("Player Lost")
+        print("Player Lost\n")
 
 
 
 
 
 if __name__ == "__main__":
-    key = 'RGAPI-9d4ba430-98df-48ca-b249-f7958883df94' # api key expired after 2 days!
+    key = 'RGAPI-9b101994-58b0-47c7-ade2-d474dadcbe59' # api key expired after 2 days!
 
     get_player_info('Hide on bush',key)
    # print(get_match_list(global_id,key))
