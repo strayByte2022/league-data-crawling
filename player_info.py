@@ -7,5 +7,5 @@ status = requests.get(url_api)
 player_info = status.json()
 
 
-print(status)
+print(type(status))
 

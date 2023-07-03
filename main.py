@@ -1,25 +1,39 @@
 import requests
 
 global_id = ''
+
 def get_player_info(user_name, api_key):
     request_url = 'https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-name/'+user_name+'?api_key='+api_key
     status = requests.get(request_url) #this is for debugging
-    info = status.json()
-    global global_id
-    global_id = info['puuid']
-    print(info)
+    if status.status_code != 200:
+        print('API key is not valid, try to renew with a new one')
+    else:
+        info = status.json()
+        global global_id
+        global_id = info['puuid']
+        print(info)
 #def get_player_match_info(user_name,api_key):
 def get_match_list(id,api_key,num):
     requests_url = 'https://asia.api.riotgames.com/lol/match/v5/matches/by-puuid/'+id+'/ids?start=0&count='+str(num) + '&api_key='+\
                    api_key
-    match_list = requests.get(requests_url)
-    match_list = match_list.json()
-    return match_list
+    status = requests.get(requests_url)
+    if status.status_code != 200:
+        print('API key is not valid, try to renew with a new one')
+        return []
+    else:
+        match_list = status.json()
+        return match_list
 
 def get_match_info_by_id(match_id,uuid,api_key):
 
     requests_url = 'https://asia.api.riotgames.com/lol/match/v5/matches/'+match_id+'?api_key='+api_key
-    match_info = requests.get(requests_url).json()
+    status = requests.get(requests_url)
+    if status.status_code != 200:
+        print('API key is invalid, try to renew with a new one')
+        return
+    else:
+        match_info = status.json()
+
     my_index = match_info['metadata']['participants'].index(uuid)
     # trivial info
     timeStamp1 = match_info['info']['gameCreation']
@@ -30,7 +44,7 @@ def get_match_info_by_id(match_id,uuid,api_key):
     print('Duration: ' + str(timeStamp2))
     print('Game mode: ' + mode)
     print('Version: ' + version)
-    #role
+    # role
     role = match_info['info']['participants'][my_index]['role']
     print('Role: ',role)
     champ = match_info['info']['participants'][my_index]['championName']
@@ -61,15 +75,14 @@ def get_match_info_by_id(match_id,uuid,api_key):
     # cc
     time_cc = match_info['info']['participants'][my_index]['timeCCingOthers']
     print('CC time on others: ', time_cc)
-    #minions
+    # minions
     creep = match_info['info']['participants'][my_index]['totalMinionsKilled']
     print('Total minions killed: ',creep)
-    #gold
+    # gold
     gold_earned = match_info['info']['participants'][my_index]['goldEarned']
     gold_spent = match_info['info']['participants'][my_index]['goldSpent']
     print('Gold Earned:', gold_earned)
-    print('Gold Spent: ',gold_spent)
-
+    print('Gold Spent: ', gold_spent)
 
     # vision score
     visionScore = match_info['info']['participants'][my_index]['visionScore']
@@ -89,7 +102,7 @@ def get_match_info_by_id(match_id,uuid,api_key):
 
 
 if __name__ == "__main__":
-    key = 'RGAPI-9d4ba430-98df-48ca-b249-f7958883df94'
+    key = 'RGAPI-9d4ba430-98df-48ca-b249-f7958883df94' # api key expired after 2 days!
 
     get_player_info('Hide on bush',key)
    # print(get_match_list(global_id,key))
