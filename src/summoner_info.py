@@ -10,9 +10,10 @@ def get_info():
     userName = userName_box.get()
     region = drop_down.get()
     info = m.get_player_info(userName, api_key, region)
+
     res_label.configure(state='normal')
-    for key,value in info.items():
-        res_label.insert(tk.END,f"{key}: {value}\n")
+    for key, value in info.items():
+        res_label.insert(tk.END, f"{key}: {value}\n")
 
     res_label.insert(tk.END,'---------------------------------------\n')
     res_label.configure(state='disabled')

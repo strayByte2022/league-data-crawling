@@ -1,7 +1,5 @@
-import json
-
 import requests
-import analytics
+
 api_keys = "RGAPI-9d4ba430-98df-48ca-b249-f7958883df94"
 #please notice that '&api_key'
 requests_url = "https://sea.api.riotgames.com/lol/match/v5/matches/by-puuid/TEYgEV3A6HxegeRhjEtmu6jn0jFC3_dFnKz" \

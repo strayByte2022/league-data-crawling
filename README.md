@@ -1,4 +1,11 @@
 ### League of Legends Match / Summoner data fetcher using RIOT's API
+
+# Version 1.1 update
+* Fix result screen -> read-only state.
+* 
+
+
+
 # Version 1.0 update 
 - BETA user interface
 - Features:
@@ -18,3 +25,4 @@
 
 **Feedback**: Would like to receive any fun ideas with those dull stats.
 
+**How to run it?**: Run mainUI.py for finding summoner's profile data.
